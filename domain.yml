@@ -5,6 +5,8 @@ version: "2.0"
 intents:
   - saludar
   - inicio_conversasion
+  - preguntar_nombre
+  - preguntar_correo
   - informar_nombre
   - informar_correo
   - informar_fecha_llegada
@@ -13,6 +15,29 @@ intents:
   - consultar_disponibilidad
   - consultar_precios
   - consultar_servicios
+  - reserva
+  - encuesta
+  - redirigir_wsp
+  - redirigir_reserva
+  - redirigir_encuesta
+  - redirigir_continuar_conversacion
+  - redirigir_no
+  - asistencia_pago
+
+  - consultar_registro_salida
+  - consultar_deposito
+  - consultar_cancelaciones
+  - consultar_politica_edad
+  - consultar_cargo_danios
+  - consultar_limpieza
+  - consultar_restricciones_bebidas
+  - consultar_horario_silencio
+  - consultar_mascotas
+  - consultar_comportamiento_inapropiado
+  - consultar_perdidas
+
+
+
 
 entities:
   - nombres_usuario
@@ -29,6 +54,8 @@ slots:
     type: text
   fecha_salida:
     type: text
+  requested_slot:
+    type: text
 
 responses:
   utter_saludar:
@@ -37,17 +64,20 @@ responses:
   utter_despedida:
     - text: "¡Hasta luego! Si tienes más preguntas, estoy aquí para ayudarte."
 
-  utter_preguntar_nombre:
-    - text: "Por favor, proporciona tu nombre."
+  utter_ask_nombres_usuario:
+    - text: "Por favor, ¿puedes proporcionarme tu nombre?"
 
-  utter_preguntar_correo:
-    - text: "Ahora, por favor, proporciona tu correo electrónico."
+  utter_ask_correo_usuario:
+    - text: "¿Cuál es tu dirección de correo electrónico?"
 
   utter_agradecer_registro:
-    - text: "Gracias, {nombres_usuario}! Hemos registrado tu información."
+    - text: "Gracias, {nombres_usuario}! Comenzemos."
 
-  utter_inicio_conversasion:
-    - text: "¿Cómo puedo ayudarte hoy?"
+  utter_inicio_conversacion:
+    - text: "¿Cómo puedo ayudarte?"
+
+  utter_continue_conversacion:
+    - text: "¿Puedo ayudarte en algo más? "
 
   utter_preguntar_fecha_llegada:
     - text: "Por favor, proporciona la fecha de llegada: "
@@ -73,9 +103,87 @@ responses:
   utter_mostrar_servicios:
     - text: "{respuesta_servicios}"
 
+  utter_asistencia_pago:
+    - text: "Aceptamos todos los tipos de pago: Visa, Mastercard, transferencias bancarias, entre otros."
+
+  utter_reserva_buttons:
+    - text: "Por favor, selecciona una opción:"
+      buttons:
+        - title: "WhatsApp"
+          payload: "/redirigir_wsp"
+          style: "danger"
+        - title: "Ir a reserva"
+          payload: "/redirigir_reserva"
+          style: "danger"
+
+
+  utter_encuesta_button:
+    - text: "Porfavor haga clic en Encuesta para abrir nuestra encuesta, esto nos ayudara a mejorar nuestros servicios "
+      buttons:
+        - title: "Encuesta"
+          payload: "/redirigir_encuesta"
+          style: "danger"
+
+#
+  utter_continuar_conversacion_button:
+    - text: "¿Puedo ayudarte en algo más?"
+      buttons:
+        - title: "No"
+          payload: "/redirigir_no"
+          style: "danger"
+
+
+
+
+  utter_consulta_registro_salida:
+    - text: "Registro y salida: El check-in está disponible a partir de las 12:00 horas y el check-out debe realizarse antes de las 12:00 horas del día siguiente."
+
+  utter_consulta_deposito:
+    - text: "Al hacer la reserva, se requiere un depósito del 50% del total de la estadía."
+
+  utter_consulta_cancelaciones:
+    - text: "Las reservas pueden cancelarse de forma gratuita hasta 72 horas antes de la fecha de llegada. Después de este plazo, se retendrá el depósito."
+
+  utter_consulta_politica_edad:
+    - text: "Se requiere que los huéspedes tengan al menos 18 años para registrarse en habitaciones compartidas."
+
+  utter_consulta_cargo_danios:
+    - text: "Es de responsabilidad los daños que ocasionen en las instalaciones, equipos, muebles, artefactos eléctricos, cubrecamas fundas, sabanas, toallas que significara la reparación o compra de estos."
+
+  utter_consulta_limpieza:
+    - text: "Se espera que los huéspedes mantengan las áreas compartidas limpias y ordenadas."
+
+  utter_consulta_restricciones_bebidas:
+    - text: "No se permite la introducción de bebidas alcohólicas al hotel."
+
+  utter_consulta_horario_silencio:
+    - text: "Se instaura un horario de silencio a partir de las 22:00 horas para respetar el descanso de los demás huéspedes."
+
+  utter_consulta_mascotas:
+    - text: "No se permiten mascotas en el hotel, con excepción de perros guía debidamente identificados."
+
+  utter_consulta_comportamiento_inapropiado:
+    - text: "El hotel se reserva el derecho de pedir a un huésped que se vaya sin reembolso si su comportamiento causa daños graves o interrumpe la tranquilidad de otros huéspedes."
+
+  utter_consulta_perdidas:
+    - text: "El establecimiento no se responsabiliza por perdidas y/o olvido de dinero, alhajas y objetos, que no hayan sido declarados ni puesto bajo custodia de la administración."
+
+
+
+
 
 actions:
   - action_store_user_info
   - action_consulta_disponibilidad
   - action_consulta_precios
   - action_consulta_servicios
+  - action_mostrar_botones_reserva
+  - action_mostrar_boton_encuesta
+  - action_mostrar_boton_continuar_conversacion
+  - action_redirigir_wsp
+  - action_redirigir_reserva
+  - action_redirigir_encuesta
+  - action_redirigir_continuar_conversacion
+  - action_info_pago
+  - validate_nombres_usuario_form
+  - validate_correo_usuario_form

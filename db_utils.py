@@ -5,7 +5,7 @@ from datetime import datetime
 class DBUtils:
     def __init__(self):
         self.conn = mysql.connector.connect(
-            host='161.132.42.209',
+            host='161.132.54.10',
             user='admin',
             password='EwYNY0Dvz6bst3vI',
             database='hotelSanCristobal'

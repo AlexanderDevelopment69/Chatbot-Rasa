@@ -31,7 +31,8 @@ print(disponibilidad_info)
 # tipo_interaccion = 'Consulta'
 # mensaje_usuario = '¿Cuáles son los servicios disponibles?'
 # respuesta_chatbot = 'Los servicios disponibles son...'
-# db_utils.insert_interaccion(nombres_usuario, correo_usuario, tipo_interaccion, mensaje_usuario, respuesta_chatbot)
+# db_utils2 = DBUtils()
+# db_utils2.insert_interaccion(nombres_usuario, correo_usuario, tipo_interaccion, mensaje_usuario, disponibilidad_info)
 
 # Cierra la conexión al finalizar
 del db_utils

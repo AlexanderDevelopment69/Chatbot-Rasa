@@ -1,18 +1,23 @@
-# config.yml
+# Archivo de configuración para Rasa NLU y Core
 
-language: "es"
-
+# Configuración del procesador de lenguaje natural (NLU)
+language: es
 pipeline:
-  - name: "SpacyNLP"
-  - name: "SpacyTokenizer"
-  - name: "SpacyFeaturizer"
-  - name: "RegexFeaturizer"
-  - name: "CRFEntityExtractor"
-  - name: "EntitySynonymMapper"
-  - name: "SklearnIntentClassifier"
+  - name: WhitespaceTokenizer
+  - name: RegexFeaturizer
+#  - name: CRFEntityExtractor
+  - name: LexicalSyntacticFeaturizer
+  - name: CountVectorsFeaturizer
+    analyzer: char_wb
+    min_ngram: 1
+    max_ngram: 4
+  - name: DIETClassifier
+    epochs: 300
 
+# Configuración del modelo de diálogo (Core)
 policies:
   - name: MemoizationPolicy
   - name: TEDPolicy
-  - name: MappingPolicy
-  - name: FormPolicy
+    max_history: 5
+    epochs: 300
+  - name: RulePolicy
