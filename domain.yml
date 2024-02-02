@@ -1,0 +1,81 @@
+# domain.yml
+
+version: "2.0"
+
+intents:
+  - saludar
+  - inicio_conversasion
+  - informar_nombre
+  - informar_correo
+  - informar_fecha_llegada
+  - informar_fecha_salida
+  - despedirse
+  - consultar_disponibilidad
+  - consultar_precios
+  - consultar_servicios
+
+entities:
+  - nombres_usuario
+  - correo_usuario
+  - fecha_llegada
+  - fecha_salida
+
+slots:
+  nombres_usuario:
+    type: text
+  correo_usuario:
+    type: text
+  fecha_llegada:
+    type: text
+  fecha_salida:
+    type: text
+
+responses:
+  utter_saludar:
+    - text: "¡Hola! Soy Chuwie, tu asistente virtual. ¿Cómo puedo ayudarte hoy?"
+
+  utter_despedida:
+    - text: "¡Hasta luego! Si tienes más preguntas, estoy aquí para ayudarte."
+
+  utter_preguntar_nombre:
+    - text: "Por favor, proporciona tu nombre."
+
+  utter_preguntar_correo:
+    - text: "Ahora, por favor, proporciona tu correo electrónico."
+
+  utter_agradecer_registro:
+    - text: "Gracias, {nombres_usuario}! Hemos registrado tu información."
+
+  utter_inicio_conversasion:
+    - text: "¿Cómo puedo ayudarte hoy?"
+
+  utter_preguntar_fecha_llegada:
+    - text: "Por favor, proporciona la fecha de llegada: "
+
+  utter_preguntar_fecha_salida:
+    - text: "Por favor, proporciona la fecha de salida: "
+
+  utter_consultar_disponibilidad:
+    - text: "Estoy verificando la disponibilidad. Un momento, por favor."
+
+  utter_mostrar_disponibilidad:
+    - text: "{respuesta_disponibilidad}"
+
+  utter_consultar_precios:
+    - text: "Consultando los precios de las habitaciones..."
+
+  utter_mostrar_precios:
+    - text: "{respuesta_precios}"
+
+  utter_consultar_servicios:
+    - text: "Consultando los servicios de las habitaciones..."
+
+  utter_mostrar_servicios:
+    - text: "{respuesta_servicios}"
+
+
+actions:
+  - action_store_user_info
+  - action_consulta_disponibilidad
+  - action_consulta_precios
+  - action_consulta_servicios
