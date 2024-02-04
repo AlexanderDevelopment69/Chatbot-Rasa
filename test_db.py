@@ -8,14 +8,13 @@ db_utils = DBUtils()
 
 # fecha_llegada = '2024-01-23'
 # fecha_salida = '2024-01-30'
-
+#
 fecha_llegada = '23-01-2024'
 fecha_salida = '30-01-2024'
 
 disponibilidad_info = db_utils.consultar_disponibilidad(fecha_llegada, fecha_salida)
 print(disponibilidad_info)
 
-#
 # # Prueba el método consultar_precios
 # precios_info = db_utils.consultar_precios()
 # print(precios_info)
@@ -23,6 +22,16 @@ print(disponibilidad_info)
 # Prueba el método consultar_servicios
 # servicios_info = db_utils.consultar_servicios()
 # print(servicios_info)
+
+# Prueba el método consultar_tipos_habitaciones
+# tipos_habitaciones_info = db_utils.consultar_tipos_habitaciones()
+# print(tipos_habitaciones_info)
+
+
+#Costo de tipo de habitacion por evento
+# evento="fiestas patrias"
+# costo_tipo_habitaciones_por_evento_info=db_utils.costo_tipo_habitaciones_por_evento(evento)
+# print(costo_tipo_habitaciones_por_evento_info)
 
 #
 # Prueba el método insert_interaccion

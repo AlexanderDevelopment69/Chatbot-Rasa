@@ -5,7 +5,7 @@ from rasa_sdk import Action, Tracker
 from rasa_sdk.events import ActionExecuted, SlotSet
 from rasa_sdk.executor import CollectingDispatcher
 from db_utils import DBUtils
-
+from datetime import datetime
 
 #
 # class ActionStoreUserInfo(Action):
@@ -38,13 +38,19 @@ class ActionStoreUserInfo(Action):
         nombres_usuario = tracker.get_slot("nombres_usuario")
         correo_usuario = tracker.get_slot("correo_usuario")
 
+        # Capturar el tiempo cuando el usuario envía un mensaje
+        tiempo_usuario_envia = datetime.now()
+
         # Almacena la información del usuario en la base de datos
         db_utils = DBUtils()
         mensaje_usuario = tracker.latest_message['text']
         respuesta_chatbot = f"Gracias, {nombres_usuario}!."
 
+        # Capturar el tiempo cuando el chatbot responde
+        tiempo_chatbot_responde = datetime.now()
+
         # Registra la interacción en la base de datos
-        db_utils.insert_interaccion(nombres_usuario, correo_usuario, "Registro", mensaje_usuario, respuesta_chatbot)
+        db_utils.insert_interaccion(nombres_usuario, correo_usuario, "Registro", mensaje_usuario, respuesta_chatbot,tiempo_usuario_envia,tiempo_chatbot_responde)
 
         # dispatcher.utter_message(text=respuesta_chatbot)
 
@@ -56,6 +62,9 @@ class ActionConsultaDisponibilidad(Action):
         return "action_consulta_disponibilidad"
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        # Capturar el tiempo cuando el usuario envía un mensaje
+        tiempo_usuario_envia = datetime.now()
+
         fecha_llegada = tracker.get_slot("fecha_llegada")
         fecha_salida = tracker.get_slot("fecha_salida")
 
@@ -71,9 +80,14 @@ class ActionConsultaDisponibilidad(Action):
         mensaje_usuario = tracker.latest_message['text']
         respuesta_chatbot = disponibilidad_info
 
+
         db_utils2 = DBUtils()
+
+        # Capturar el tiempo cuando el chatbot responde
+        tiempo_chatbot_responde = datetime.now()
+
         db_utils2.insert_interaccion(nombres_usuario, correo_usuario, "Consulta_Disponibilidad", mensaje_usuario,
-                                     respuesta_chatbot)
+                                     respuesta_chatbot,tiempo_usuario_envia,tiempo_chatbot_responde)
 
         return []
 
@@ -83,6 +97,9 @@ class ActionConsultaPrecios(Action):
         return "action_consulta_precios"
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        # Capturar el tiempo cuando el usuario envía un mensaje
+        tiempo_usuario_envia = datetime.now()
+
         # Lógica para consultar precios desde la base de datos
         db_utils = DBUtils()
         precios_info = db_utils.consultar_precios()
@@ -95,11 +112,92 @@ class ActionConsultaPrecios(Action):
         mensaje_usuario = tracker.latest_message['text']
         respuesta_chatbot = precios_info
 
+
+
         db_utils2 = DBUtils()
+        # Capturar el tiempo cuando el chatbot responde
+        tiempo_chatbot_responde = datetime.now()
+
         db_utils2.insert_interaccion(nombres_usuario, correo_usuario, "Consulta_Precios", mensaje_usuario,
-                                     respuesta_chatbot)
+                                     respuesta_chatbot,tiempo_usuario_envia,tiempo_chatbot_responde)
 
         return []
+
+
+class ActionConsultaHabitaciones(Action):
+    def name(self) -> Text:
+        return "action_consulta_habitaciones"
+
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        # Capturar el tiempo cuando el usuario envía un mensaje
+        tiempo_usuario_envia = datetime.now()
+
+        # Lógica para consultar precios desde la base de datos
+        db_utils = DBUtils()
+        habitaciones_info = db_utils.consultar_tipos_habitaciones()
+
+        dispatcher.utter_message(text=habitaciones_info)
+
+        # Registra la interacción en la base de datos
+        nombres_usuario = tracker.get_slot("nombres_usuario")
+        correo_usuario = tracker.get_slot("correo_usuario")
+        mensaje_usuario = tracker.latest_message['text']
+        respuesta_chatbot = habitaciones_info
+
+        db_utils2 = DBUtils()
+
+        # Capturar el tiempo cuando el chatbot responde
+        tiempo_chatbot_responde = datetime.now()
+
+        db_utils2.insert_interaccion(nombres_usuario, correo_usuario, "Consulta_Habitaciones", mensaje_usuario,
+                                     respuesta_chatbot,tiempo_usuario_envia,tiempo_chatbot_responde)
+
+        return []
+
+    class ActionConsultarCostoHabitacionesPorEvento(Action):
+        def name(self) -> Text:
+            return "action_consulta_costo_habitaciones_evento"
+
+        def run(self, dispatcher: CollectingDispatcher,
+                tracker: Tracker,
+                domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+            # nombre_evento = tracker.latest_message['text']  # Obtener el nombre del evento desde el mensaje del usuario
+
+            # Capturar el tiempo cuando el usuario envía un mensaje
+            tiempo_usuario_envia = datetime.now()
+
+            # Obtener el valor de la entidad nombre_evento
+            nombre_evento = next(tracker.get_latest_entity_values("nombre_evento"))
+
+
+
+            # nombre_evento = tracker.get_slot("nombre_evento")
+
+            # Lógica para consultar los costos de habitación por evento
+            db_utils = DBUtils()
+            costo_habitaciones_info =  db_utils.costo_tipo_habitaciones_por_evento(nombre_evento)
+
+            # Registra la interacción en la base de datos
+            nombres_usuario = tracker.get_slot("nombres_usuario")
+            correo_usuario = tracker.get_slot("correo_usuario")
+            mensaje_usuario = tracker.latest_message['text']
+            respuesta_chatbot = costo_habitaciones_info
+
+            db_utils2 = DBUtils()
+
+            # Capturar el tiempo cuando el chatbot responde
+            tiempo_chatbot_responde = datetime.now()
+
+            db_utils2.insert_interaccion(nombres_usuario, correo_usuario, "Consulta_Habitaciones_Evento", mensaje_usuario,
+                                         respuesta_chatbot, tiempo_usuario_envia, tiempo_chatbot_responde)
+
+
+
+            dispatcher.utter_message(text=costo_habitaciones_info)
+
+            return []
+
+
 
 
 class ActionConsultaServicios(Action):
@@ -107,6 +205,9 @@ class ActionConsultaServicios(Action):
         return "action_consulta_servicios"
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        # Capturar el tiempo cuando el usuario envía un mensaje
+        tiempo_usuario_envia = datetime.now()
+
         # Lógica para consultar servicios desde la base de datos
         db_utils = DBUtils()
         servicios_info = db_utils.consultar_servicios()
@@ -120,8 +221,12 @@ class ActionConsultaServicios(Action):
         respuesta_chatbot = servicios_info
 
         db_utils2 = DBUtils()
+
+        # Capturar el tiempo cuando el chatbot responde
+        tiempo_chatbot_responde = datetime.now()
+
         db_utils2.insert_interaccion(nombres_usuario, correo_usuario, "Consulta_Servicios", mensaje_usuario,
-                                     respuesta_chatbot)
+                                     respuesta_chatbot, tiempo_usuario_envia, tiempo_chatbot_responde)
 
         return []
 
@@ -220,8 +325,12 @@ class ActionRedirigirWsp(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        # Capturar el tiempo cuando el usuario envía un mensaje
+        tiempo_usuario_envia = datetime.now()
+
         # Abre el enlace en el navegador
-        url = "https://wa.link/w653qw"
+        url = "https://wa.link/zcknj0"
         webbrowser.open_new_tab(url)
         dispatcher.utter_message(text="¡Abriendo WhatsApp en el navegador!")
 
@@ -232,8 +341,11 @@ class ActionRedirigirWsp(Action):
         respuesta_chatbot = url
 
         db_utils = DBUtils()
+        # Capturar el tiempo cuando el chatbot responde
+        tiempo_chatbot_responde = datetime.now()
+
         db_utils.insert_interaccion(nombres_usuario, correo_usuario, "redirigir_wsp", mensaje_usuario,
-                                    respuesta_chatbot)
+                                    respuesta_chatbot, tiempo_usuario_envia, tiempo_chatbot_responde)
 
         return []
 
@@ -245,6 +357,10 @@ class ActionRedirigirReserva(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        # Capturar el tiempo cuando el usuario envía un mensaje
+        tiempo_usuario_envia = datetime.now()
+
         # Abre el enlace en el navegador
         url = "http://localhost:80/habitaciones"
         webbrowser.open_new_tab(url)
@@ -257,8 +373,10 @@ class ActionRedirigirReserva(Action):
         respuesta_chatbot = url
 
         db_utils = DBUtils()
+        # Capturar el tiempo cuando el chatbot responde
+        tiempo_chatbot_responde = datetime.now()
         db_utils.insert_interaccion(nombres_usuario, correo_usuario, "redirigir_reserva", mensaje_usuario,
-                                    respuesta_chatbot)
+                                    respuesta_chatbot, tiempo_usuario_envia, tiempo_chatbot_responde)
 
         return []
 
@@ -270,6 +388,10 @@ class ActionRedirigirEncuesta(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        # Capturar el tiempo cuando el usuario envía un mensaje
+        tiempo_usuario_envia = datetime.now()
+
         # Abre el enlace en el navegador
         url = "https://docs.google.com/forms/d/e/1FAIpQLSctnNrx4mcbVfAepsClb6zoXN3xBwaycCjj70FXPWrt2W8m3A/viewform"
         webbrowser.open_new_tab(url)
@@ -282,8 +404,10 @@ class ActionRedirigirEncuesta(Action):
         respuesta_chatbot = url
 
         db_utils = DBUtils()
+        # Capturar el tiempo cuando el chatbot responde
+        tiempo_chatbot_responde = datetime.now()
         db_utils.insert_interaccion(nombres_usuario, correo_usuario, "redirigir_encuenta", mensaje_usuario,
-                                    respuesta_chatbot)
+                                    respuesta_chatbot, tiempo_usuario_envia, tiempo_chatbot_responde)
 
         return []
 
@@ -295,6 +419,10 @@ class ActionInformacionPago(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        # Capturar el tiempo cuando el usuario envía un mensaje
+        tiempo_usuario_envia = datetime.now()
+
         respuesta = dispatcher.utter_message(response="utter_asistencia_pago")
 
         # Registra la interacción en la base de datos
@@ -304,8 +432,10 @@ class ActionInformacionPago(Action):
         respuesta_chatbot = respuesta
 
         db_utils = DBUtils()
+        # Capturar el tiempo cuando el chatbot responde
+        tiempo_chatbot_responde = datetime.now()
         db_utils.insert_interaccion(nombres_usuario, correo_usuario, "Información pagos", mensaje_usuario,
-                                    respuesta_chatbot)
+                                    respuesta_chatbot, tiempo_usuario_envia, tiempo_chatbot_responde)
 
         return []
 

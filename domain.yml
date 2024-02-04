@@ -15,6 +15,8 @@ intents:
   - consultar_disponibilidad
   - consultar_precios
   - consultar_servicios
+  - consultar_habitaciones
+  - consultar_costo_tipo_habitaciones_evento
   - reserva
   - encuesta
   - redirigir_wsp
@@ -44,6 +46,8 @@ entities:
   - correo_usuario
   - fecha_llegada
   - fecha_salida
+  - nombre_evento
+
 
 slots:
   nombres_usuario:
@@ -54,8 +58,8 @@ slots:
     type: text
   fecha_salida:
     type: text
-  requested_slot:
-    type: text
+
+
 
 responses:
   utter_saludar:
@@ -88,11 +92,18 @@ responses:
   utter_consultar_disponibilidad:
     - text: "Estoy verificando la disponibilidad. Un momento, por favor."
 
+
   utter_mostrar_disponibilidad:
     - text: "{respuesta_disponibilidad}"
 
   utter_consultar_precios:
     - text: "Consultando los precios de las habitaciones..."
+
+  utter_consultar_habitaciones:
+    - text: "Consultando las habitaciones. Un momento, por favor."
+
+  utter_consultar_costo_habitaciones_evento:
+    - text: "Consultando costo de las habitaciones. Un momento, por favor."
 
   utter_mostrar_precios:
     - text: "{respuesta_precios}"
@@ -104,7 +115,7 @@ responses:
     - text: "{respuesta_servicios}"
 
   utter_asistencia_pago:
-    - text: "Aceptamos todos los tipos de pago: Visa, Mastercard, transferencias bancarias, entre otros."
+    - text: "Aceptamos todos los tipos de pago: Visa, Mastercard, Yape, Plin, en efectivo al llegar al hotel, transferencias bancarias."
 
   utter_reserva_buttons:
     - text: "Por favor, selecciona una opción:"
@@ -124,7 +135,7 @@ responses:
           payload: "/redirigir_encuesta"
           style: "danger"
 
-#
+
   utter_continuar_conversacion_button:
     - text: "¿Puedo ayudarte en algo más?"
       buttons:
@@ -177,6 +188,8 @@ actions:
   - action_consulta_disponibilidad
   - action_consulta_precios
   - action_consulta_servicios
+  - action_consulta_habitaciones
+  - action_consulta_costo_habitaciones_evento
   - action_mostrar_botones_reserva
   - action_mostrar_boton_encuesta
   - action_mostrar_boton_continuar_conversacion

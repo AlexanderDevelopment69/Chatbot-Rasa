@@ -28,6 +28,21 @@
     - action_consulta_precios
     - action_mostrar_boton_continuar_conversacion
 
+## Historia de Consulta de habitaciones
+
+* consultar_habitaciones
+    - utter_consultar_habitaciones
+    - action_consulta_habitaciones
+    - action_mostrar_boton_continuar_conversacion
+
+## consultar costos de tipo de habitaciones por evento
+* consultar_costo_tipo_habitaciones_evento
+  - utter_consultar_costo_habitaciones_evento
+  - action_consulta_costo_habitaciones_evento
+  - action_mostrar_boton_continuar_conversacion
+
+
+
 ## Historia de Consulta de disponibilidad
 
 * consultar_disponibilidad
