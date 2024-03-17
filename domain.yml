@@ -18,10 +18,14 @@ intents:
   - consultar_habitaciones
   - consultar_costo_tipo_habitaciones_evento
   - reserva
+  - promocion
+  - consultar_reserva
   - encuesta
   - redirigir_wsp
   - redirigir_reserva
   - redirigir_encuesta
+  - redirigir_promocion_si
+  - redirigir_promocion_no
   - redirigir_continuar_conversacion
   - redirigir_no
   - asistencia_pago
@@ -37,6 +41,8 @@ intents:
   - consultar_mascotas
   - consultar_comportamiento_inapropiado
   - consultar_perdidas
+  - consultar_atencion
+  - informar_numero_habitacion
 
 
 
@@ -58,6 +64,9 @@ slots:
     type: text
   fecha_salida:
     type: text
+  numero_habitacion:
+    type: text
+
 
 
 
@@ -75,7 +84,7 @@ responses:
     - text: "¿Cuál es tu dirección de correo electrónico?"
 
   utter_agradecer_registro:
-    - text: "Gracias, {nombres_usuario}! Comenzemos."
+    - text: "Gracias, {nombres_usuario}!"
 
   utter_inicio_conversacion:
     - text: "¿Cómo puedo ayudarte?"
@@ -84,10 +93,10 @@ responses:
     - text: "¿Puedo ayudarte en algo más? "
 
   utter_preguntar_fecha_llegada:
-    - text: "Por favor, proporciona la fecha de llegada: "
+    - text: "Por favor, proporciona la fecha de llegada en (día-mes-año): "
 
   utter_preguntar_fecha_salida:
-    - text: "Por favor, proporciona la fecha de salida: "
+    - text: "Por favor, proporciona la fecha de salida (día-mes-año): "
 
   utter_consultar_disponibilidad:
     - text: "Estoy verificando la disponibilidad. Un momento, por favor."
@@ -117,21 +126,46 @@ responses:
   utter_asistencia_pago:
     - text: "Aceptamos todos los tipos de pago: Visa, Mastercard, Yape, Plin, en efectivo al llegar al hotel, transferencias bancarias."
 
+  utter_fallback_message:
+    - text: "No te entendi, no cuento con la informacion. Comunícate con un asesor."
+
+  utter_consulta_reserva:
+    - text: "Porfavor ingrese el numero de habitación (solo ingrese el numero) : "
+
+
+  utter_conculta_promocion_button:
+    - text: "¿Desea recibir información sobre nuestros precios y promociones por correo? 😊"
+      buttons:
+        - title: "✔️ Si"
+          payload: "/redirigir_promocion_si"
+          style: "danger"
+        - title: "❌ No"
+          payload: "/redirigir_promocion_no"
+          style: "danger"
+
+
+
   utter_reserva_buttons:
     - text: "Por favor, selecciona una opción:"
       buttons:
-        - title: "WhatsApp"
+        - title: "👨‍💼 WhatsApp"
           payload: "/redirigir_wsp"
           style: "danger"
-        - title: "Ir a reserva"
+        - title: "🏨 Ir a reserva"
           payload: "/redirigir_reserva"
           style: "danger"
 
+  utter_whatsapp_button:
+    - text: "Por favor, haga clic para consultar a un asesor: 👨‍"
+      buttons:
+        - title: "👨‍💼 WhatsApp"
+          payload: "/redirigir_wsp"
+          style: "danger"
 
   utter_encuesta_button:
     - text: "Porfavor haga clic en Encuesta para abrir nuestra encuesta, esto nos ayudara a mejorar nuestros servicios "
       buttons:
-        - title: "Encuesta"
+        - title: "📋 Encuesta"
           payload: "/redirigir_encuesta"
           style: "danger"
 
@@ -179,6 +213,8 @@ responses:
   utter_consulta_perdidas:
     - text: "El establecimiento no se responsabiliza por perdidas y/o olvido de dinero, alhajas y objetos, que no hayan sido declarados ni puesto bajo custodia de la administración."
 
+  utter_consulta_atencion:
+    - text: "Estamos disponibles 24x7, para servirte 😊"
 
 
 
@@ -191,12 +227,33 @@ actions:
   - action_consulta_habitaciones
   - action_consulta_costo_habitaciones_evento
   - action_mostrar_botones_reserva
+  - action_mostrar_boton_whatssap
   - action_mostrar_boton_encuesta
   - action_mostrar_boton_continuar_conversacion
+  - action_mostrar_boton_promocion
   - action_redirigir_wsp
   - action_redirigir_reserva
   - action_redirigir_encuesta
+  - action_redirigir_promocion_si
+  - action_redirigir_promocion_no
   - action_redirigir_continuar_conversacion
   - action_info_pago
   - validate_nombres_usuario_form
   - validate_correo_usuario_form
+  - action_consulta_registro_salida
+  - action_consulta_deposito
+  - action_consulta_cancelaciones
+  - action_consulta_politica_edad
+  - action_consulta_cargo_danios
+  - action_consulta_limpieza
+  - action_consulta_restricciones_bebidas
+  - action_consulta_horario_silencio
+  - action_consulta_mascotas
+  - action_consulta_comportamiento_inapropiado
+  - action_consulta_perdidas
+  - action_consulta_atencion
+  - action_fallback
+  - action_confirmar_reserva
+  - action_capturar_numero_habitacion
+
+

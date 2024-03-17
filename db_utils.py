@@ -5,7 +5,7 @@ from datetime import datetime
 class DBUtils:
     def __init__(self):
         self.conn = mysql.connector.connect(
-            host='161.132.54.10',
+            host='161.132.40.103',
             user='admin',
             password='EwYNY0Dvz6bst3vI',
             database='hotelSanCristobal'
@@ -97,7 +97,7 @@ class DBUtils:
 
     def consultar_precios(self):
         query = """
-        SELECT nombre_tipo, costo FROM tipos_habitaciones
+        SELECT nombre_tipo, precio FROM tipos_habitaciones
         """
 
         result = self.execute_query(query)
@@ -105,8 +105,28 @@ class DBUtils:
         precios_info = "Precios de los tipos de habitaciones:\n"
         for row in result:
             precios_info += f"- {row[0]}: S/. {row[1]}\n"
+        precios_info += "El IGV esta incluido en el precio de las habitaciones"
 
         return precios_info
+
+
+    # def consultar_precios(self):
+    #     query = """
+    #         SELECT nombre_tipo, costo, IGV, precio
+    #         FROM tipos_habitaciones;
+    #     """
+    #     result = self.execute_query(query)
+    #
+    #     precios_info = "Precios de los tipos de habitaciones:\n"
+    #
+    #     for row in result:
+    #         precios_info += f"- {row[0]}:\n"
+    #         precios_info += f"  Costo: S/. {row[1]}\n"
+    #         precios_info += f"  IGV: S/. {row[2]}\n"
+    #         precios_info += f"  Precio: S/. {row[3]}\n\n"
+    #
+    #     return precios_info
+
 
     def consultar_servicios(self):
         query = """
@@ -189,15 +209,15 @@ class DBUtils:
     #
     #     self.execute_query(query, values)
 
-    def insert_interaccion(self, nombres_usuario, correo_usuario, tipo_interaccion, mensaje_usuario, respuesta_chatbot,tiempo_usuario_envia, tiempo_chatbot_responde):
+    def insert_interaccion(self, nombres_usuario, correo_usuario, tipo_interaccion, mensaje_usuario, respuesta_chatbot,tiempo_usuario_envia, tiempo_chatbot_responde,id_usuario):
         # tiempo_usuario_envia = self.capture_user_message_time()
         # tiempo_chatbot_responde = self.capture_bot_response_time()
 
         query = """
-        INSERT INTO chatbot_interacciones (nombres_usuario, correo_usuario, tipo_interaccion, mensaje_usuario, respuesta_chatbot, tiempo_usuario_envia, tiempo_chatbot_responde)
-        VALUES (%s, %s, %s, %s, %s, %s, %s)
+        INSERT INTO chatbot_interacciones (nombres_usuario, correo_usuario, tipo_interaccion, mensaje_usuario, respuesta_chatbot, tiempo_usuario_envia, tiempo_chatbot_responde,id_usuario)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
         """
-        values = (nombres_usuario, correo_usuario, tipo_interaccion, mensaje_usuario, respuesta_chatbot, tiempo_usuario_envia, tiempo_chatbot_responde)
+        values = (nombres_usuario, correo_usuario, tipo_interaccion, mensaje_usuario, respuesta_chatbot, tiempo_usuario_envia, tiempo_chatbot_responde,id_usuario)
         self.execute_query(query, values)
 
     def capture_user_message_time(self):

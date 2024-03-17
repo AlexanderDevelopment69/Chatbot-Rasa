@@ -1,0 +1,65 @@
+{
+  'intent': {
+    'id': -2574991414258586915,
+    'name': 'consultar_precios',
+    'confidence': 0.8473338484764099
+  },
+  'entities': [],
+  'text': 'precios',
+  'message_id': '36261b0b17a548f8ba4eb75f8e2d59c4',
+  'metadata': {},
+  'intent_ranking': [
+    {
+      'id': -2574991414258586915,
+      'name': 'consultar_precios',
+      'confidence': 0.8473338484764099
+    },
+    {
+      'id': 4866264111428611937,
+      'name': 'informar_fecha_salida',
+      'confidence': 0.0595892183482646
+      94
+    },
+    {
+      'id': 1485898831641347248,
+      'name': 'consultar_horario_silencio',
+      'confidence': 0.021026285365223885
+    },
+    {
+      'id': -2794882477979707877,
+      'name': 'inicio_conversacion',
+      'confidence': 0.019137129187583923
+    },
+    {
+      'id': -5746216201062613532,
+      'name': 'informar_fecha_llegada',
+      'confidence': 0.01390831172466278
+    },
+    {
+      'id': 80665352154797608,
+      'name': 'consultar_restricciones_bebidas',
+      'confidence': 0.009941751137375832
+    },
+    {
+      'id': 6175148842384880609,
+      'name': 'consultar_deposito',
+      'confidence': 0.00799117237329483
+    },
+    {
+      'id': 1766390414401876293,
+      'name': 'informar_nombre',
+      'confidence': 0.007446983363479376
+    },
+    {
+      'id': 382437280402
+      6715901,
+      'name': 'saludar',
+      'confidence': 0.006990847643464804
+    },
+    {
+      'id': 7162283149409461104,
+      'name': 'consultar_registro_salida',
+      'confidence': 0.006634410936385393
+    }
+  ]
+}

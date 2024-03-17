@@ -18,6 +18,10 @@
 - [Juan rodriguez eduardo](nombres_usuario)
 - [Ana marica josefina](nombres_usuario)
 - [Carla](nombres_usuario)
+- [Raul](nombres_usuario)
+- [Sebastian Jose Jorge](nombres_usuario)
+- [Margarito](nombres_usuario)
+- [Julio](nombres_usuario)
 
 ## intent:informar_correo
 - [luis@example.com](correo_usuario)
@@ -26,6 +30,35 @@
 - [juan_3433@example.org](correo_usuario)
 - [ana@example.com](correo_usuario)
 - [carla@email.com](correo_usuario)
+- [eduardo_jose3456@email.com](correo_usuario)
+- [julio_jose3456@email.com](correo_usuario)
+
+## intent: informar_numero_habitacion
+- La habitación número [1](numero_habitacion) 
+- Quiero reservar la habitación [15](numero_habitacion)
+- necesito la habitación [20](numero_habitacion) 
+- [1](numero_habitacion) 
+- [2](numero_habitacion) 
+- [3](numero_habitacion) 
+- [4](numero_habitacion) 
+- [5](numero_habitacion) 
+- [6](numero_habitacion) 
+- [7](numero_habitacion) 
+- [8](numero_habitacion) 
+- [9](numero_habitacion) 
+- [10](numero_habitacion) 
+- [11](numero_habitacion) 
+- [12](numero_habitacion) 
+- [13](numero_habitacion) 
+- [14](numero_habitacion) 
+- [15](numero_habitacion) 
+- [16](numero_habitacion) 
+- [17](numero_habitacion) 
+- [18](numero_habitacion) 
+- [19](numero_habitacion) 
+- [20](numero_habitacion) 
+
+
 
 
 ## intent:despedirse
@@ -118,6 +151,13 @@
 - recepcionista
 - quiero reservar una habitacion
 
+
+## intent:consultar_atencion
+- atencion
+- cual es la antencion
+- atienden los fines de semana
+- cuando cierran
+- que horas atienden
 
 
 

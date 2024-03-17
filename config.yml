@@ -12,13 +12,27 @@ pipeline:
     min_ngram: 1
     max_ngram: 4
   - name: DIETClassifier
-    epochs: 600
+    epochs: 800
   - name: EntitySynonymMapper
 
 # Configuración del modelo de diálogo (Core)
+#policies:
+#  - name: MemoizationPolicy
+#  - name: TEDPolicy
+#    max_history: 5
+#    epochs: 600
+#  - name: RulePolicy
+
+
 policies:
   - name: MemoizationPolicy
   - name: TEDPolicy
     max_history: 5
-    epochs: 600
+    epochs: 800
+  - name: FallbackPolicy
+    nlu_threshold: 0.3
+    core_threshold: 0.3
+    fallback_action_name: "action_fallback"
   - name: RulePolicy
+
+
